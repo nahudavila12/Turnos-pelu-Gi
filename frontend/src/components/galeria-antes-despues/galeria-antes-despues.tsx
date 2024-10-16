@@ -3,29 +3,9 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Slider } from "@/components/ui/slider"
+import { GaleriaAntesDespuesProps } from '../../lib/interfaces'
 
-const transformaciones = [
-  {
-    id: 1,
-    antes: "/placeholder.svg?height=400&width=300",
-    despues: "/placeholder.svg?height=400&width=300",
-    descripcion: "Cambio de look completo con corte y color"
-  },
-  {
-    id: 2,
-    antes: "/placeholder.svg?height=400&width=300",
-    despues: "/placeholder.svg?height=400&width=300",
-    descripcion: "Tratamiento de alisado y cambio de color"
-  },
-  {
-    id: 3,
-    antes: "/placeholder.svg?height=400&width=300",
-    despues: "/placeholder.svg?height=400&width=300",
-    descripcion: "Corte de pelo y peinado para evento especial"
-  }
-]
-
-export function GaleriaAntesDespues() {
+export function GaleriaAntesDespues({ transformaciones }: GaleriaAntesDespuesProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [sliderValue, setSliderValue] = useState(50)
 

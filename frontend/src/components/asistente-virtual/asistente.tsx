@@ -4,13 +4,9 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Message, AsistenteVirtualProps } from '../../lib/interfaces'
 
-type Message = {
-  text: string
-  isUser: boolean
-}
-
-const respuestas = {
+const respuestas: { [key: string]: string } = {
   "corte": "Tenemos varios estilos de corte disponibles. ¿Buscas algo corto, mediano o largo?",
   "color": "Ofrecemos una amplia gama de colores y técnicas como mechas, balayage, y tinte completo. ¿Qué estilo te interesa?",
   "cuidado": "El cuidado del cabello es esencial. Recomendamos usar productos específicos para tu tipo de cabello y hacer tratamientos hidratantes regularmente.",
@@ -18,9 +14,9 @@ const respuestas = {
   "default": "Lo siento, no entiendo tu pregunta. ¿Puedes reformularla o preguntar sobre cortes, colores, cuidado del cabello o precios?"
 }
 
-export function AsistenteVirtual() {
+export function AsistenteVirtual({ initialMessage = "Hola, soy el asistente virtual de la Peluquería Gisela. ¿En qué puedo ayudarte hoy?" }: AsistenteVirtualProps) {
   const [messages, setMessages] = useState<Message[]>([
-    { text: "Hola, soy el asistente virtual de la Peluquería Gisela. ¿En qué puedo ayudarte hoy?", isUser: false }
+    { text: initialMessage, isUser: false }
   ])
   const [input, setInput] = useState("")
 
