@@ -2,26 +2,41 @@
 
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { FAQProps } from '../../lib/interfaces'
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box,
+  Heading,
+  Container,
+} from "@chakra-ui/react"
+import { FAQProps } from "../../lib/interfaces"
 
 export function FAQ({ faqs }: FAQProps) {
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="bg-purple-700 text-white p-4">
-        <h2 className="text-xl font-bold text-center">Preguntas Frecuentes</h2>
-      </div>
-      <Accordion type="single" collapsible className="p-4">
+    <Container maxW="2xl" bg="white" rounded="lg" shadow="md" overflow="hidden">
+      <Box bg="purple.700" color="white" p={4}>
+        <Heading as="h2" size="lg" textAlign="center">
+          Preguntas Frecuentes
+        </Heading>
+      </Box>
+      <Accordion allowToggle>
         {faqs.map((faq, index) => (
-          <AccordionItem key={index} value={`item-${index}`}>
-            <AccordionTrigger>{faq.pregunta}</AccordionTrigger>
-            <AccordionContent>{faq.respuesta}</AccordionContent>
+          <AccordionItem key={index}>
+            <h2>
+              <AccordionButton _expanded={{ bg: "purple.100" }}>
+                <Box flex="1" textAlign="left">
+                  {faq.pregunta}
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              {faq.respuesta}
+            </AccordionPanel>
           </AccordionItem>
         ))}
       </Accordion>
-    </div>
+    </Container>
   )
 }

@@ -1,14 +1,13 @@
 "use client"
 
-import { useState } from 'react'
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Star } from 'lucide-react'
+import { useState } from "react"
+import { Box, Button, Card, CardBody, Container, Flex, Icon, Text } from "@chakra-ui/react"
+import { Star } from "lucide-react"
 
 const resenas = [
-  { id: 1, nombre: 'María García', texto: 'Excelente servicio, me encantó mi nuevo look.', calificacion: 5 },
-  { id: 2, nombre: 'Juan Pérez', texto: 'Muy profesionales y atentos. Volveré seguro.', calificacion: 4 },
-  { id: 3, nombre: 'Ana Rodríguez', texto: 'El mejor lugar para cuidar de tu cabello.', calificacion: 5 },
+  { id: 1, nombre: "María García", texto: "Excelente servicio, me encantó mi nuevo look.", calificacion: 5 },
+  { id: 2, nombre: "Juan Pérez", texto: "Muy profesionales y atentos. Volveré seguro.", calificacion: 4 },
+  { id: 3, nombre: "Ana Rodríguez", texto: "El mejor lugar para cuidar de tu cabello.", calificacion: 5 },
 ]
 
 export default function ResenasClientes() {
@@ -23,30 +22,32 @@ export default function ResenasClientes() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold text-center mb-8">Lo que dicen nuestros clientes</h2>
-      <Card className="max-w-2xl mx-auto">
-        <CardContent className="p-6">
-          <div className="flex justify-between items-center mb-4">
+    <Container maxW="container.md" py={8}>
+      <Text fontSize="3xl" fontWeight="bold" textAlign="center" mb={8}>
+        Lo que dicen nuestros clientes
+      </Text>
+      <Card>
+        <CardBody>
+          <Flex justify="space-between" mb={4}>
             <Button onClick={prevReview} variant="outline">&lt; Anterior</Button>
             <Button onClick={nextReview} variant="outline">Siguiente &gt;</Button>
-          </div>
-          <div className="text-center">
-            <p className="text-lg mb-4">&quot;{resenas[currentIndex].texto}&quot;</p>
-            <p className="font-semibold">{resenas[currentIndex].nombre}</p>
-            <div className="flex justify-center mt-2">
+          </Flex>
+          <Box textAlign="center">
+            <Text fontSize="lg" mb={4}>&quot;{resenas[currentIndex].texto}&quot;</Text>
+            <Text fontWeight="semibold">{resenas[currentIndex].nombre}</Text>
+            <Flex justify="center" mt={2}>
               {[...Array(5)].map((_, i) => (
-                <Star
+                <Icon
+                  as={Star}
                   key={i}
-                  className={`w-5 h-5 ${
-                    i < resenas[currentIndex].calificacion ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                  }`}
+                  boxSize={5}
+                  color={i < resenas[currentIndex].calificacion ? "yellow.400" : "gray.300"}
                 />
               ))}
-            </div>
-          </div>
-        </CardContent>
+            </Flex>
+          </Box>
+        </CardBody>
       </Card>
-    </div>
+    </Container>
   )
 }

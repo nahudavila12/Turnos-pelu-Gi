@@ -1,59 +1,58 @@
 "use client"
 
 import { useState } from 'react'
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import 'moment/locale/es'
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import '@fullcalendar/common/main.css'
+import '@fullcalendar/daygrid/main.css'
+import '@fullcalendar/timegrid/main.css'
 
-moment.locale('es')
-const localizer = momentLocalizer(moment)
+interface Event {
+  title: string;
+  start: string;
+  end: string;
+}
 
 export default function CalendarioCitas() {
-  const [events, setEvents] = useState([
+  const [events, setEvents] = useState<Event[]>([
     {
-      start: moment().toDate(),
-      end: moment().add(1, "hours").toDate(),
-      title: "Corte de cabello"
+      title: "Corte de cabello",
+      start: new Date().toISOString(),
+      end: new Date(new Date().getTime() + 60 * 60 * 1000).toISOString(), // 1 hora después
     },
     {
-      start: moment().add(2, "days").toDate(),
-      end: moment().add(2, "days").add(2, "hours").toDate(),
-      title: "Tinte y peinado"
+      title: "Tinte y peinado",
+      start: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toISOString(), // En 2 días
+      end: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000).toISOString(), // 1 hora después
     }
   ])
 
-  const handleSelect = ({ start, end }) => {
+  const handleDateClick = (arg: { dateStr: string }) => {
     const title = window.prompt('Nuevo evento')
     if (title) {
-      setEvents([
-        ...events,
-        {
-          start,
-          end,
-          title
-        }
-      ])
+      const newEvent = {
+        title,
+        start: arg.dateStr,
+        end: arg.dateStr // Puedes ajustar esto según sea necesario
+      }
+      setEvents([...events, newEvent])
     }
   }
 
   return (
     <div className="h-[600px] p-4">
-      <Calendar
-        localizer={localizer}
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
         events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: '100%' }}
-        onSelectSlot={handleSelect}
-        selectable
-        messages={{
-          next: "Siguiente",
-          previous: "Anterior",
-          today: "Hoy",
-          month: "Mes",
-          week: "Semana",
-          day: "Día"
+        dateClick={handleDateClick}
+        editable={true}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
         }}
       />
     </div>

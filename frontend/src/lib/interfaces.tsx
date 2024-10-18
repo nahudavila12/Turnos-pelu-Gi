@@ -96,6 +96,13 @@ export interface Message {
       servicios: string[]
       ingresos: number[]
     }
+
+    
+  }
+  export interface Event {
+    start: Date;
+    end: Date;
+    title: string;
   }
 
   export const AsistenteVirtual: FC<AsistenteVirtualProps> = () => null

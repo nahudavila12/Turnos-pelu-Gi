@@ -1,60 +1,131 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Heading,
+  Text,
+  Button,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Spinner,
+} from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/icons"; // Asegúrate de que tus iconos sean compatibles con Chakra UI.
+import Link from "next/link";
 
-export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const router = useRouter()
+export default function LoginComponent() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Aquí iría la lógica de autenticación
-    console.log('Inicio de sesión con:', email, password)
-    // Redirigir al usuario después del inicio de sesión
-    router.push('/dashboard')
+  async function onSubmit(event: React.SyntheticEvent) {
+    event.preventDefault();
+    setIsLoading(true);
+
+    // Simular un proceso de inicio de sesión
+    setTimeout(() => {
+      setIsLoading(false);
+      // Aquí puedes manejar la lógica de inicio de sesión o redirigir después de iniciar sesión
+    }, 3000);
   }
 
   return (
-    <div className="min-h-screen bg-purple-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center text-purple-700">Iniciar Sesión</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Correo Electrónico
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-          >
+    <Box mt={10} mb={10}> {/* Agregar márgenes arriba y abajo */}
+      <Card width="full" maxW="md" mx="auto" bg="purple.50">
+        <CardHeader bg="purple.600" color="white" textAlign="center">
+          <Heading as="h2" size="lg" fontWeight="bold">
             Iniciar Sesión
-          </button>
-        </form>
-      </div>
-    </div>
-  )
+          </Heading>
+          <Text color="purple.100">Accede a tu cuenta para gestionar tus citas</Text>
+        </CardHeader>
+        <CardBody>
+          <Tabs defaultIndex={0} width="full">
+            <TabList>
+              <Tab width="50%">Cuenta Local</Tab>
+              <Tab width="50%">Google</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <form onSubmit={onSubmit}>
+                  <Box mt={4}>
+                    <FormControl id="email" isRequired>
+                      <FormLabel>Email</FormLabel>
+                      <Input
+                        placeholder="nombre@ejemplo.com"
+                        type="email"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        autoCorrect="off"
+                        isDisabled={isLoading}
+                        borderColor="purple.300"
+                      />
+                    </FormControl>
+                    <FormControl id="password" mt={4} isRequired>
+                      <FormLabel>Contraseña</FormLabel>
+                      <Input
+                        placeholder="••••••••"
+                        type="password"
+                        autoCapitalize="none"
+                        autoComplete="current-password"
+                        isDisabled={isLoading}
+                        borderColor="purple.300"
+                      />
+                    </FormControl>
+                    <Checkbox id="remember" mt={4} isDisabled={isLoading}>
+                      Recordarme
+                    </Checkbox>
+                    <Button
+                      mt={4}
+                      colorScheme="purple"
+                      width="full"
+                      isLoading={isLoading}
+                      type="submit"
+                    >
+                      Iniciar Sesión
+                      {isLoading && <Spinner size="sm" ml={2} />}
+                    </Button>
+                  </Box>
+                </form>
+              </TabPanel>
+              <TabPanel>
+                <Button
+                  variant="outline"
+                  colorScheme="purple"
+                  width="full"
+                  onClick={() => {}}
+                  mt={4}
+                  borderColor="purple.300"
+                >
+                  <Icon name="google" boxSize={4} marginRight={2} />
+                  Iniciar Sesión con Google
+                </Button>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </CardBody>
+        <CardFooter display="flex" flexDirection="column" alignItems="center">
+          <Button variant="link" colorScheme="purple">
+            ¿Olvidaste tu contraseña?
+          </Button>
+          <Text mt={2} textAlign="center" fontSize="sm" color="gray.600">
+            ¿No tienes una cuenta?{" "}
+            <Link href="/register"> 
+            <Button variant="link" colorScheme="purple">
+              Regístrate
+            </Button>
+            </Link>
+          </Text>
+        </CardFooter>
+      </Card>
+    </Box>
+  );
 }

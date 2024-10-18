@@ -1,116 +1,175 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { useState } from "react";
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardBody,
+  Heading,
+  Stack,
+  Select,
+  FormControl,
+  FormLabel,
+  Input,
+  Text,
+  Button,
+  Flex,
+  Icon,
+  Grid,
+} from "@chakra-ui/react";
+import { Scissors, Clock } from "lucide-react";
+import { DayPicker } from "react-day-picker"; // Importa el DayPicker
 
-export default function Reserva() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const [nombre, setNombre] = useState('')
-  const [email, setEmail] = useState('')
-  const [fecha, setFecha] = useState('')
-  const [hora, setHora] = useState('')
-  const [servicio, setServicio] = useState('')
-  const [opcion, setOpcion] = useState('')
+const servicios = [
+  { id: 1, nombre: "Corte de cabello", duracion: 30, precio: 25 },
+  { id: 2, nombre: "Tinte", duracion: 90, precio: 50 },
+  { id: 3, nombre: "Peinado", duracion: 45, precio: 35 },
+  { id: 4, nombre: "Tratamiento capilar", duracion: 60, precio: 40 },
+];
 
-  useEffect(() => {
-    setServicio(searchParams.get('servicio') || '')
-    setOpcion(searchParams.get('opcion') || '')
-  }, [searchParams])
+const horarios = [
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "19:00",
+];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Aquí iría la lógica para procesar la reserva
-    console.log('Reserva realizada:', { nombre, email, fecha, hora, servicio, opcion })
-    alert('Reserva realizada con éxito!')
-    router.push('/')
-  }
+export default function ReservarCita() {
+  const [fecha, setFecha] = useState<Date | undefined>(new Date());
+  const [servicio, setServicio] = useState("");
+  const [hora, setHora] = useState("");
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-purple-700 text-white p-4">
-        <div className="container mx-auto">
-          <Link href="/" className="text-2xl font-bold">Peluquería Gisela</Link>
-        </div>
-      </header>
+    <Card maxW="4xl" mx="auto" bg="purple.50" p={6} borderRadius="md" boxShadow="lg">
+      <CardHeader bg="purple.600" borderRadius="md" py={4} px={6}>
+        <Heading as="h2" size="lg" textAlign="center" color="white">
+          Reservar Cita
+        </Heading>
+      </CardHeader>
+      <CardBody>
+        <Stack spacing={6} mt={6}>
+          <Flex direction={{ base: "column", md: "row" }} gap={6}>
+            <Box>
+              <FormControl>
+                <FormLabel color="purple.800">Selecciona un servicio</FormLabel>
+                <Select
+                  placeholder="Elige un servicio"
+                  value={servicio}
+                  onChange={(e) => setServicio(e.target.value)}
+                  borderColor="purple.300"
+                  focusBorderColor="purple.500"
+                >
+                  {servicios.map((s) => (
+                    <option key={s.id} value={s.nombre}>
+                      {s.nombre} - {s.precio}€
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
 
-      <main className="container mx-auto mt-8 p-4">
-        <h1 className="text-3xl font-bold mb-6">Reservar Cita</h1>
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-          <div className="mb-4">
-            <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre completo</label>
-            <input
-              type="text"
-              id="nombre"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="fecha" className="block text-sm font-medium text-gray-700">Fecha</label>
-            <input
-              type="date"
-              id="fecha"
-              value={fecha}
-              onChange={(e) => setFecha(e.target.value)}
-              required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="hora" className="block text-sm font-medium text-gray-700">Hora</label>
-            <input
-              type="time"
-              id="hora"
-              value={hora}
-              onChange={(e) => setHora(e.target.value)}
-              required
-              
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="servicio" className="block text-sm font-medium text-gray-700">Servicio</label>
-            <input
-              type="text"
-              id="servicio"
-              value={servicio}
-              readOnly
-              className="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 shadow-sm"
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="opcion" className="block text-sm font-medium text-gray-700">Opción seleccionada</label>
-            <input
-              type="text"
-              id="opcion"
-              value={opcion}
-              readOnly
-              className="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 shadow-sm"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 transition-colors"
+              {servicio && (
+                <Box bg="purple.100" p={4} borderRadius="md" mt={4}>
+                  <Text fontWeight="semibold" color="purple.800" mb={2}>
+                    {servicio}
+                  </Text>
+                  <Flex align="center" color="purple.700">
+                    <Icon as={Clock} mr={2} />
+                    <Text>{servicios.find((s) => s.nombre === servicio)?.duracion} minutos</Text>
+                  </Flex>
+                  <Flex align="center" color="purple.700" mt={2}>
+                    <Icon as={Scissors} mr={2} />
+                    <Text>{servicios.find((s) => s.nombre === servicio)?.precio}€</Text>
+                  </Flex>
+                </Box>
+              )}
+            </Box>
+
+            <Box>
+              <FormControl>
+                <FormLabel color="purple.800">Elige una fecha</FormLabel>
+                <DayPicker
+                  mode="single"
+                  selected={fecha}
+                  onDayClick={(day) => setFecha(day)}
+                  styles={{
+                    day: {
+                      borderRadius: "8px",
+                      borderColor: "purple.300",
+                    },
+                    day_selected: { // Cambiar aquí
+                      backgroundColor: "purple.600",
+                      color: "white",
+                    },
+                    day_today: { // Cambiar aquí
+                      fontWeight: "bold",
+                      color: "purple.600",
+                    },
+                  }}
+                />
+              </FormControl>
+            </Box>
+          </Flex>
+
+          <Box>
+            <FormLabel color="purple.800">Selecciona una hora</FormLabel>
+            <Grid templateColumns="repeat(3, 1fr)" gap={2}>
+              {horarios.map((h) => (
+                <Button
+                  key={h}
+                  onClick={() => setHora(h)}
+                  colorScheme={hora === h ? "purple" : "gray"}
+                  variant={hora === h ? "solid" : "outline"}
+                >
+                  {h}
+                </Button>
+              ))}
+            </Grid>
+          </Box>
+
+          <Box>
+            <FormLabel color="purple.800">Tus datos</FormLabel>
+            <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4}>
+              <Input placeholder="Nombre" borderColor="purple.300" />
+              <Input placeholder="Apellido" borderColor="purple.300" />
+              <Input placeholder="Email" type="email" borderColor="purple.300" />
+              <Input placeholder="Teléfono" type="tel" borderColor="purple.300" />
+            </Grid>
+          </Box>
+
+          <Button
+            colorScheme="purple"
+            width="full"
+            onClick={() => {
+              /* Handle form submission */
+            }}
           >
             Confirmar Reserva
-          </button>
-        </form>
-      </main>
-    </div>
-  )
+          </Button>
+
+          {servicio && fecha && hora && (
+            <Box bg="purple.100" p={4} borderRadius="md">
+              <Heading as="h3" size="md" color="purple.800" mb={2}>
+                Resumen de tu reserva
+              </Heading>
+              <Text color="purple.700">
+                <strong>Servicio:</strong> {servicio}
+              </Text>
+              <Text color="purple.700">
+                <strong>Fecha:</strong> {fecha?.toLocaleDateString()}
+              </Text>
+              <Text color="purple.700">
+                <strong>Hora:</strong> {hora}
+              </Text>
+            </Box>
+          )}
+        </Stack>
+      </CardBody>
+    </Card>
+  );
 }

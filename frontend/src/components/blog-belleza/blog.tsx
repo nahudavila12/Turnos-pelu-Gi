@@ -1,6 +1,15 @@
 import Link from 'next/link'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import {
+  Button,
+  Container,
+  Heading,
+  Grid,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Text
+} from "@chakra-ui/react"
 
 const entradas = [
   {
@@ -25,26 +34,30 @@ const entradas = [
 
 export default function BlogBelleza() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold text-center mb-8">Blog de Belleza</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <Container maxW="container.lg" py={8}>
+      <Heading as="h2" size="xl" textAlign="center" mb={8}>
+        Blog de Belleza
+      </Heading>
+      <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} gap={6}>
         {entradas.map((entrada) => (
-          <Card key={entrada.id}>
+          <Card key={entrada.id} shadow="md" borderWidth="1px">
             <CardHeader>
-              <CardTitle>{entrada.titulo}</CardTitle>
+              <Heading as="h3" size="md">
+                {entrada.titulo}
+              </Heading>
             </CardHeader>
-            <CardContent>
-              <p>{entrada.resumen}</p>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <span className="text-sm text-gray-500">{entrada.fecha}</span>
-              <Button variant="outline">
-                <Link href={`/blog/${entrada.id}`}>Leer más</Link>
+            <CardBody>
+              <Text>{entrada.resumen}</Text>
+            </CardBody>
+            <CardFooter display="flex" justifyContent="space-between" alignItems="center">
+              <Text fontSize="sm" color="gray.500">{entrada.fecha}</Text>
+              <Button as={Link} href={`/blog/${entrada.id}`} variant="outline" colorScheme="purple">
+                Leer más
               </Button>
             </CardFooter>
           </Card>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Container>
   )
 }

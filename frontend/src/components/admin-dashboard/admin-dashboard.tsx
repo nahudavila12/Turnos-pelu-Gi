@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 export default function AdminDashboard() {
-  const [appointments, setAppointments] = useState([
+  const [appointments] = useState([
     { id: 1, client: 'María García', service: 'Corte de cabello', date: '2023-06-01 10:00' },
     { id: 2, client: 'Juan Pérez', service: 'Tinte', date: '2023-06-01 11:30' },
     { id: 3, client: 'Ana Rodríguez', service: 'Peinado', date: '2023-06-01 14:00' },
