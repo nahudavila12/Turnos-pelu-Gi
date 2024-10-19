@@ -30,7 +30,7 @@ import {
             <Stack spacing={4}>
               <Flex align="center" gap={2}>
                 <Icon as={Phone} color="purple.600" />
-                <Text color="purple.900">+34 123 456 789</Text>
+                <Text color="purple.900">+54 383 402-4572</Text>
               </Flex>
               <Flex align="center" gap={2}>
                 <Icon as={MapPin} color="purple.600" />

@@ -25,6 +25,9 @@ export function Navbar() {
             <Link href="/resenas">
               <Button variant="ghost" _hover={{ bg: "purple.600" }}>Reseñas</Button>
             </Link>
+            <Link href="/admin">
+              <Button variant="ghost" _hover={{ bg: "purple.600" }}>Admin</Button>
+            </Link>
             <Link href="/blog">
               <Button variant="ghost" _hover={{ bg: "purple.600" }}>Blog</Button>
             </Link>
@@ -38,9 +41,9 @@ export function Navbar() {
                 Iniciar Sesión
               </Button>
             </Link>
-            <Link href="/reserva">
+            <Link href="/register">
               <Button bg="white" color="purple.700" _hover={{ bg: "gray.200" }}>
-                Reservar Cita
+                Registrarse
               </Button>
             </Link>
           </Flex>

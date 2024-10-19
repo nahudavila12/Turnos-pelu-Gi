@@ -1,29 +1,40 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { Box, Button, Container, Flex, Heading, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Text } from "@chakra-ui/react"
-import { GaleriaAntesDespuesProps } from "../../lib/interfaces"
+import { useState } from "react";
+import Image from "next/image";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  Text,
+} from "@chakra-ui/react";
+import { GaleriaAntesDespuesProps } from "../../lib/interfaces";
 
 export function GaleriaAntesDespues({ transformaciones }: GaleriaAntesDespuesProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [sliderValue, setSliderValue] = useState(50)
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [sliderValue, setSliderValue] = useState(50);
 
   const handleSliderChange = (value: number) => {
-    setSliderValue(value)
-  }
+    setSliderValue(value);
+  };
 
   const nextTransformacion = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % transformaciones.length)
-    setSliderValue(50)
-  }
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % transformaciones.length);
+    setSliderValue(50);
+  };
 
   const prevTransformacion = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + transformaciones.length) % transformaciones.length)
-    setSliderValue(50)
-  }
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + transformaciones.length) % transformaciones.length);
+    setSliderValue(50);
+  };
 
-  const transformacion = transformaciones[currentIndex]
+  const transformacion = transformaciones[currentIndex];
 
   return (
     <Container maxW="2xl" bg="white" rounded="lg" shadow="md" overflow="hidden">
@@ -33,7 +44,7 @@ export function GaleriaAntesDespues({ transformaciones }: GaleriaAntesDespuesPro
         </Heading>
       </Box>
       <Box p={4}>
-        <Box position="relative" w="full" h="400px">
+        <Box position="relative" w="full" h="500px"> {/* Aumentar la altura a 500px */}
           <Image
             src={transformacion.antes}
             alt="Antes"
@@ -66,6 +77,9 @@ export function GaleriaAntesDespues({ transformaciones }: GaleriaAntesDespuesPro
           </SliderTrack>
           <SliderThumb boxSize={4} bg="purple.600" />
         </Slider>
+        <Text textAlign="center" mt={2} fontSize="sm" color="gray.600">
+          Desliza para comparar: el lado izquierdo muestra el <strong>Antes</strong> y el derecho el <strong>Después</strong>.
+        </Text>
         <Text textAlign="center" mt={4}>
           {transformacion.descripcion}
         </Text>
@@ -79,5 +93,5 @@ export function GaleriaAntesDespues({ transformaciones }: GaleriaAntesDespuesPro
         </Flex>
       </Box>
     </Container>
-  )
+  );
 }

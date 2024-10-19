@@ -15,7 +15,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/" className="hover:text-white transition-colors">Inicio</Link></li>
               <li><Link href="/servicios" className="hover:text-white transition-colors">Servicios</Link></li>
-              <li><Link href="/reserva" className="hover:text-white transition-colors">Reservar Cita</Link></li>
+              <li><Link href="/transformaciones" className="hover:text-white transition-colors">Transformaciones</Link></li>
               <li><Link href="/sobre-nosotros" className="hover:text-white transition-colors">Sobre Nosotros</Link></li>
             </ul>
           </div>
@@ -23,7 +23,7 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Contacto</h4>
             <address className="not-italic">
               <p>Capital,Catamarca,Argentina</p>
-              <p className="mt-2">Teléfono: +34 123 456 789</p>
+              <p className="mt-2">Teléfono: +54 383 402-4572</p>
               <p>Email: atencion.giselaechavarria@gmail.com</p>
             </address>
           </div>
